@@ -105,8 +105,9 @@ namespace OOPsReview.Data
         { 
             get { return _Years; }
             set 
-            {
-                if (value < 0)
+            {   
+                //  *error handling if value is not true
+                if (!Utilities.IsZeroPositive(value))
                 {
                     throw new ArgumentOutOfRangeException($"Years value {value} is invalid. Must be 0 or greater");
                 }
@@ -197,7 +198,7 @@ namespace OOPsReview.Data
         {
             //  this string is knopws as a "comma separate values" or commonly known as CSV string
             //  the string uses the get; of the property
-            return $"{Title}, {Level}";
+            return $"{Title}, {Level}, {Years}";
         }
 
         public void SetEmployeeResponsibilityLevel(SupervisoryLevel level)
