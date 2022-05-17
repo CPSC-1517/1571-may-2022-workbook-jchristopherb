@@ -154,7 +154,7 @@ namespace OOPsReview.Data
 
 
         //  GREEDY CONSTRUCTOR:
-        public Employment(string title, SupervisoryLevel level, double years)
+        public Employment(string title, SupervisoryLevel level, double years = 0.0)
         {
 
             //  constructor body
@@ -163,9 +163,51 @@ namespace OOPsReview.Data
             //      c) validation for public readonly data members
             //      d) validation for properties with a private set MUST be done here if not done in the property
 
+            //  Default Parameters
+            //      WHY?    it allows the programmer to use your constructor/method with having to specify all argument in the code to your constructor method
+
+            //      Location: End of Parameter List
+            //      How many: As many as you wish
+            //      Values for your default parameters MUST be a valid value
+            //      Position and order of specified default parameters are important when the program uses the constructor/method.
+            //      Default parameters CAN be skipped, HOWEVER, you still must account for the skipped parameter in your argument call list using commas
+            //      By giving the default parameter an argument value on the call, the constructor/method default value is overridden
+
+            //      SYNTAX: dataType parameterName = default value
+            //      Example: years on this constructor is a default parameter
+
+            //      Example: skipped defaults (3 default parameters, second one skipped)
+            //          ...(string requiredParam, int requiredParam, int default1 = 0, int default2 = 0, int default3 = 1)
+            //call:     ...("required string", 25, 10, , 5) default2 was skipped
+
             Title = title;
             Level = level;
             Years = years;  //  eventually the data will be placed in _Years
+        }
+
+        //  Behaviours (a.k.a. METHODS)
+        //      a behaviours is any method in your class
+        //      behaviours can be private (for use by the class only); public (for use by the outside user)
+        //      all rules about methods are in effect
+
+        //      a special method may be placed in your class to reflect the data stored by the instance (object) based on this class definition
+        //      this method is part of the system software and can be overriden by your own version of the method
+
+        public override string ToString()
+        {
+            //  this string is knopws as a "comma separate values" or commonly known as CSV string
+            //  the string uses the get; of the property
+            return $"{Title}, {Level}";
+        }
+
+        public void SetEmployeeResponsibilityLevel(SupervisoryLevel level)
+        {
+            //  this method, in this example would not be necessary as the access directly the Level (property) is public ( set; )
+            //  HOWEVER: IF the Level property had a private set; ,  the outsider user would NOT have direct access to changing the property.
+            //  THEREFORE: a method (besides the cosntructor) would need to be supplied to allow the outsider the ability to alter the property value (if they so desired)
+            //  this assignment uses the set; of the property
+
+            Level = level;
         }
     }
 }
