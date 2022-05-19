@@ -198,7 +198,7 @@ namespace OOPsReview.Data
         {
             //  this string is knopws as a "comma separate values" or commonly known as CSV string
             //  the string uses the get; of the property
-            return $"{Title}, {Level}, {Years}";
+            return $"{Title}, {Level}, {Years}"; // these values have space between them, on UnitTest should have spaces as well (Line 100)
         }
 
         public void SetEmployeeResponsibilityLevel(SupervisoryLevel level)
