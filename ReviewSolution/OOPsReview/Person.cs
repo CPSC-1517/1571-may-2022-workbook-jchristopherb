@@ -62,7 +62,13 @@ namespace OOPsReview.Data
 
         public List<Employment> EmploymentPositions { get; private set; }
 
-        public Person()
+        //  this property will compile cleanly
+        //  this property will return a value IF EmploymentPositions has an instace of List<T>
+        //  this property WILL ABORT IF EmploymentPositions has NOT be set to an insatnce of List<T>
+
+        /* // Option 1
+         * 
+         * public Person()
         {
             //  the system will automatically assign default system values
             //      to our datamembers accordingly to their datatype
@@ -79,6 +85,41 @@ namespace OOPsReview.Data
             //      some place to put the data ONCE it is supplied
 
             EmploymentPositions = new List<Employment>();
+        }*/
+
+        //  Option 2
+        //  DO not code a "Default" constructor
+        //  Code ONLY the "Greedy" constructor
+        //  if only a greedy constructor exists for the class, the ONLY way to possibly
+        //      create an instance for the class within the program would be to use the
+        //      constructor when the class instance is created
+
+        public Person(string firstname, string lastnmae, ResidentAddress address, List<Employment> employmentpositions)
+        {
+            FirstName = firstname;
+            LastName = lastnmae;
+            Address = address;
+            if (employmentpositions != null)
+                EmploymentPositions = employmentpositions;
+            else
+                //  this will allow a NULL parameter value and the class to have an empty List<T>
+                EmploymentPositions = new List<Employment>();
+        }
+
+        public void ChangeName(string firstname, string lastname)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+        }
+
+        public void AddEmployment(Employment employment)
+        {
+            if (employment == null)
+            {
+                throw new ArgumentNullException("You muct supply an employment record for it to be added to this person");
+            }
+
+            EmploymentPositions.Add(employment);
         }
 
     }
