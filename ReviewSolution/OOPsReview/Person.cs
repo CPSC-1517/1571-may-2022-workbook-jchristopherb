@@ -66,6 +66,8 @@ namespace OOPsReview.Data
         //  this property will return a value IF EmploymentPositions has an instace of List<T>
         //  this property WILL ABORT IF EmploymentPositions has NOT be set to an insatnce of List<T>
 
+        public int NumberOfPositions { get { return EmploymentPositions.Count; } }
+
         /* // Option 1
          * 
          * public Person()
