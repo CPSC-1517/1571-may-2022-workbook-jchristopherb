@@ -53,6 +53,23 @@ me = CreatePerson(Job, Address);
 //      Address is a struct so we need the ".ToString"
 Console.WriteLine($"{me.FirstName} {me.LastName} lives at {me.Address.ToString()}" + $" having a job count of {me.NumberOfPositions}");
 
+//  Dispalying all Jobs Start
+Console.WriteLine("\nJobs:\n");
+
+//  foreach
+foreach (var item in me.EmploymentPositions)
+{
+    if (item.Years > 0)
+        Console.WriteLine(item.ToString());
+}
+
+for(int i = 0; i < me.EmploymentPositions.Count; i++)
+{
+    Console.WriteLine(me.EmploymentPositions[i].ToString());
+}
+
+//  Dispalying all Jobs End
+
 void CreateJob(ref Employment job)      //  add reference here in parameter
 {
     //  since the class MAY throw exceptions, you should have user friendly  error handling
@@ -94,7 +111,27 @@ ResidentAddress CreateAddress()
 //  create a person
 Person CreatePerson(Employment job, ResidentAddress address)
 {
-    Person me = new Person("Chris", "Bana", address, null);
-    me.AddEmployment(job);
+    //Person me = new Person("Chris", "Bana", address, null);
+
+    //  one could add the job(s) to the instance of Person (me) after the instance
+    //      is created via the behaviour AddEmployment(Employment emp)
+    //      me.AddEmployment(job)
+
+    //  OR
+
+    //  one could create a List<T> and add to the List<T> before creating the Person instance
+    List<Employment> employments = new List<Employment>();
+    employments.Add(job);   //  add an element to the List<T>
+    Person me = new Person("Christopehr", "Bana", address, employments);  //  using the greedy constructor
+
+    //  create additional job and load to Person
+    Employment employment = new Employment("New Hire", SupervisoryLevel.Entry, 0.5);
+    me.AddEmployment(employment);
+
+    employment = new Employment("Team Head", SupervisoryLevel.TeamLeader, 5.2);
+    me.AddEmployment(employment);
+
+    employment = new Employment("Department IT Head", SupervisoryLevel.DepartmentHead, 6.8);
+    me.AddEmployment(employment);
     return me;
 }
