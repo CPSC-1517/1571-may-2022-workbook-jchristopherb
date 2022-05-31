@@ -57,11 +57,11 @@ Console.WriteLine($"{me.FirstName} {me.LastName} lives at {me.Address.ToString()
 Console.WriteLine("\nJobs:\n");
 
 //  foreach
-foreach (var item in me.EmploymentPositions)
+/*foreach (var item in me.EmploymentPositions)
 {
     if (item.Years > 0)
         Console.WriteLine(item.ToString());
-}
+}*/
 
 for(int i = 0; i < me.EmploymentPositions.Count; i++)
 {
