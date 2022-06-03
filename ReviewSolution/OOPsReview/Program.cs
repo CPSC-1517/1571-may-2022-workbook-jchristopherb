@@ -68,6 +68,13 @@ for(int i = 0; i < me.EmploymentPositions.Count; i++)
     Console.WriteLine(me.EmploymentPositions[i].ToString());
 }
 
+//using Employment.Parse
+
+string theRecord = "Boss,Owner,5.5";
+Employment theParsedRecord = Employment.Parse(theRecord);
+Console.WriteLine(theParsedRecord.ToString());
+
+
 //  Dispalying all Jobs End
 
 void CreateJob(ref Employment job)      //  add reference here in parameter
