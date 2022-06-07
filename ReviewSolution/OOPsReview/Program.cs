@@ -87,22 +87,34 @@ else
     Console.WriteLine("The parsing didnt work.");
 }
 
+// 
+// File I/O
+//writing a comma separated value file
+string pathname = WriteCSVFile();
 
-//  Dispalying all Jobs End
-void CreateJob(ref Employment job)      //  add reference here in parameter
+//read a comma separated value file
+//we will be using ReadAllLines(pathname); returns an array of strings; each
+//  array element is one line in your csv file.
+//List<Employment> jobs = ReadCSVFile(pathname);
+
+//writing a JSON file
+
+//Read a JSON file
+
+void CreateJob(ref Employment job)
 {
-    //  since the class MAY throw exceptions, you should have user friendly  error handling
+    //since the class MAY throw exceptions, you should have user friendly error handling
     try
     {
-        job = new Employment(); //  default constructor;    new command takes a constructor as it's reference
-        //  BECAUSE my properties have public set (mutators), I can "set" the value of the property
-        //      from directly from the driver program
+        job = new Employment(); //default constructor; new command takes a constructor as it's reference
+        //BECAUSE my properties have public set (mutators), I can "set" the value of the
+        //  proporty directly from the driver program
         job.Title = "Boss";
         job.Level = SupervisoryLevel.Owner;
         job.Years = 25.5;
-        //  OR
-        //  use the greedy constructor and set everything up all at once
-        //  job = new Employment("Boss", SupervisoryLevel.Owner, 25.5);
+        //OR
+        //use the greedy constructor
+        //job = new Employment("Boss", SupervisoryLevel.Owner, 25.5);
     }
     catch (ArgumentNullException ex)
     {
@@ -117,40 +129,73 @@ void CreateJob(ref Employment job)      //  add reference here in parameter
         Console.WriteLine(ex.Message);
     }
 }
-
-//  create method for ResidentAddress
 ResidentAddress CreateAddress()
 {
-    //  greedy constructor
-    ResidentAddress address = new ResidentAddress(10706, "106 St", "", "", "Edmonton", "AB");
-
+    //greedy constructor
+    ResidentAddress address = new ResidentAddress(10706, "106 st", "",
+                                                            "", "Edmonton", "AB");
     return address;
 }
-
-//  create a person
 Person CreatePerson(Employment job, ResidentAddress address)
 {
-    //Person me = new Person("Chris", "Bana", address, null);
-
-    //  one could add the job(s) to the instance of Person (me) after the instance
-    //      is created via the behaviour AddEmployment(Employment emp)
-    //      me.AddEmployment(job)
-
-    //  OR
-
-    //  one could create a List<T> and add to the List<T> before creating the Person instance
-    List<Employment> employments = new List<Employment>();
-    employments.Add(job);   //  add an element to the List<T>
-    Person me = new Person("Christopehr", "Bana", address, employments);  //  using the greedy constructor
-
-    //  create additional job and load to Person
+    //Person me = new Person("Don", "Welch", address, null);
+    //one could add the job(s) to the instance of Person (me) after
+    //  the instance is created via the behaviour AddEmployment(Employment emp)
+    //me.AddEmployment(job);
+    //OR
+    //one could create a List<T> and add to the list<T> before creating the Person instance
+    List<Employment> employments = new List<Employment>(); //create the List<T> instance
+    employments.Add(job); //add a element to the List<T>
+    Person me = new Person("Don", "Welch", address, employments); //using the greedy constructor
+    //create additional jobs and load to Person
     Employment employment = new Employment("New Hire", SupervisoryLevel.Entry, 0.5);
     me.AddEmployment(employment);
-
     employment = new Employment("Team Head", SupervisoryLevel.TeamLeader, 5.2);
     me.AddEmployment(employment);
-
-    employment = new Employment("Department IT Head", SupervisoryLevel.DepartmentHead, 6.8);
+    employment = new Employment("Department IT head", SupervisoryLevel.DepartmentHead, 6.8);
     me.AddEmployment(employment);
     return me;
+}
+
+string WriteCSVFile()
+{
+    string pathname = "";
+    try
+    {
+        List<Employment> jobs = new List<Employment>();
+        Employment theEmployment = new Employment("trainee", SupervisoryLevel.Entry, 0.5);
+        jobs.Add(theEmployment);
+        jobs.Add(new Employment("worker", SupervisoryLevel.TeamMember, 3.5));
+        jobs.Add(new Employment("lead", SupervisoryLevel.TeamLeader, 7.4));
+        jobs.Add(new Employment("dh new projects", SupervisoryLevel.DepartmentHead, 1.0));
+
+        //create a list of comma separated value strings
+        //the contents of each string will be 3 values of Emmployment
+        List<string> csvlines = new();
+
+        //place all the instances of Employment in the collection of jobs
+        //  in the csvlines using .ToString() of the Employment class
+        foreach (var item in jobs)
+        {
+            csvlines.Add(item.ToString());
+        }
+
+        //write to a text file the csv lines
+        //each line represents a Employment instance
+        //you could use StreamWriter
+        //HOWEEVER within the File class there is a method that outputs a list of strings
+        //  all within ONE command. There is NO NEED for a StreamWriter instance
+        //the pathname is the minimum for the command
+        //the file by default will be created in the same folder as your .exe file
+        //you CAN alter the path name using relative addressing
+
+        pathname = "../../../Employment.csv";
+        File.WriteAllLines(pathname, csvlines);
+        Console.WriteLine($"\n Check out the CSV file at: {Path.GetFullPath(pathname)}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    return Path.GetFullPath(pathname);
 }
