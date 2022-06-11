@@ -201,7 +201,7 @@ namespace OOPsReview.Data
             return $"{Title}, {Level}, {Years}"; // these values have space between them, on UnitTest should have spaces as well (Line 100)
         }
 
-        public void SetEmployeeResponsibilityLevel(SupervisoryLevel level)
+        public void SetEmploymentResponsibilityLevel(SupervisoryLevel level)
         {
             //  this method, in this example would not be necessary as the access directly the Level (property) is public ( set; )
             //  HOWEVER: IF the Level property had a private set; ,  the outsider user would NOT have direct access to changing the property.
