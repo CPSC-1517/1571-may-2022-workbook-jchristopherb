@@ -52,6 +52,8 @@ me = CreatePerson(Job, Address);
 Console.WriteLine($"{me.FirstName} {me.LastName} lives at {me.Address.ToString()}" +
     $" having a job count of {me.NumberOfPositions}");
 Console.WriteLine("\nJobs: output via foreach loop\n");
+
+//  this will show the list
 foreach (var item in me.EmploymentPositions)
 {
     if (item.Years > 0)
