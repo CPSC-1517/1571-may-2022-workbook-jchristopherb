@@ -11,22 +11,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mycss.css" asp-append-version="true" /> @*placing custom css as the last stylesheet in the head area*@
 </head>
 <body>
     <header>
         <nav>
            <ul>
               <li>
+                 <a asp-area="" asp-page="/Index">
+                    <img src="~/img/WestWindLogo.png" alt="WestWind Thumbnail Logo" title="Go to Home"/>     
+                 </a>
+              </li>
+              <li>
                  <a asp-area="" asp-page="/Index">Home</a>
               </li>
+              
+              @*Sub-menu*@
               <li>
-                 <a asp-area="" 
-                    asp-page="/Samples/BasicDataManagement">Basics</a>
+                  <span>Samples</span>
+                  <ul>
+                      <li>
+                        <a asp-area="" asp-page="/Samples/BasicDataManagement">Basics</a>
+                      </li>
+                      <li>
+                         <a asp-area="" asp-page="/Samples/Controls">Controls</a>
+                      </li>
+                  </ul>
               </li>
-              <li>
-                 <a asp-area="" 
-                    asp-page="/Samples/Controls">Controls</a>
-              </li>
+              @*Sub-menu END*@
+              
               <li>
                  <a asp-area="" asp-page="/Privacy">Privacy</a>
               </li>

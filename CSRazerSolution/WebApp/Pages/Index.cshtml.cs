@@ -37,7 +37,7 @@ namespace WebApp.Pages
             int value = rnd.Next(0,100); //100 is NOT include
             if (value % 2 == 0)
             {
-                MyName = $"Don ({value}) welcome to the wide wild world of Razor Pages";
+                MyName = $"Chris ({value}) welcome to the wide wild world of Razor Pages";
             }
             else
             {
