@@ -56,7 +56,7 @@
     
     <label>
         this is a textarea for a great deal of text
-        <textarea asp-for="MassText" rows="5" cols="100"></textarea>
+        <textarea asp-for="MassText" rows="5" cols="100" required></textarea>
     </label>
     
     <label>
@@ -71,7 +71,11 @@
     </label>
     
     <button type="submit" id="jsIdentifier" name="RequestObjectIdentifier">
-        Press Me A (submit form)
+        Press Me (submit form to OnPost)
+    </button>
+
+    <button type="submit" id="jsIdentifier" asp-page-handler="SecondButton">
+        Press You (submit form to specified OnPostSecondButton)
     </button>
 </form>
 
