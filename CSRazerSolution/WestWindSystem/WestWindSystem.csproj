@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+//**/<!-->-->Business Logic Layer<!--Business Logic Layer-->
+	  Data AccessBusiness Logic Layer-->
+    <Folder Include="DAL\" /><!--Business LogicData Access-->Data A Layer</Project>
