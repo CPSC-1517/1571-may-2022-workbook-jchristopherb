@@ -38,14 +38,31 @@ namespace WestWindSystem.Entities
 
         //  Your sql pkey is a compound pkey in sql
         //  YOu will need to add the annotation in front of each part of the compound key attribute / property to form the correct pkey structure
-        //  c) Key("nameOfSQLAttribute",Column(n))
+        //  c)
+        //  [Key]
+        //  [Column(Order=n)]
 
-        [Key("Id",DatabaseGeneratedOption(DatabaseGeneratedOption.Identity))]
+        //  if you have a foreign and your attribute / property names are the same
+        //  the system will already known about the fkey relationship; therefore you DO NOT use the annotation [ForeignKey]
+        [Key]
         
         public int Id { get; set; }
+
         public int Major { get; set; }
         public int Minor { get; set; }
         public int Build { get; set; }
         public DateTime ReleaseDate { get; set; }
+
+        // you can create a property within your entity that is NOT a data attribute in your sql table.
+        //  if you do, use the [NotMapped} annotation
+
+        //  Example
+        //  assume you two separate properties FirstName and LastName you wish to force the program to consistently concatenate the properties in their code you wish to make it easier for the programmer by doing the concatenation for them
+        //  create a read-only property (just a get) and return the concatenation
+        //  the program can then use the property to concatenate the two names in the code
+        //  The system realizes that this is NOT a database field.
+
+        //  [NotMapped}
+        //  public string FullName { get { return FirstName + " " + LastName; } }
     }
 }
