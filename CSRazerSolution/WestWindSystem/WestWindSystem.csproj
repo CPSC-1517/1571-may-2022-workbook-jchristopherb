@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-//**/<!-->-->Business Logic Layer<!--Business Logic Layer-->
-	  Data AccessBusiness Logic Layer-->
-    <Folder Include="DAL\" /><!--Business LogicData Access-->Data A Layer</Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+  </ItemGroup>
+</Project>

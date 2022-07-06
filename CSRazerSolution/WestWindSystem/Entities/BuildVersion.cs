@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 #region Additional Namespaces
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 #endregion
 
 namespace WestWindSystem.Entities
