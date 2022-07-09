@@ -13,7 +13,7 @@ namespace WestWindSystem.BLL
 {
     // this class needs to allow access from software that is outside of the class library project.
     // therefore, this class will have an access type of public
-    internal class BuildVersionServices
+    public class BuildVersionServices
     {
         #region set up the context connection variable and class constructor
         // variable to hold an instance of context class
