@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WestWindSystem.BLL;
 
 #region Additional Namespaces
 using WestWindSystem.Entities;
-using WestWindSystem.BLL;
-
 #endregion
 
 namespace WebApp.Pages
@@ -32,7 +32,7 @@ namespace WebApp.Pages
         public BuildVersion buildVersionInfo { get; set; }
 
         //this is a local property
-        public string MyName { get; set; }
+        public string? MyName { get; set; }
 
         //this is a class Behaviour (method)
         //this method, OnGet(), executes for any Get request
