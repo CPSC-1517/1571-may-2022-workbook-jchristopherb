@@ -1,7 +1,11 @@
 # 1517 May 2022 workbook
 
-## John Christopher Bana
+## Don Welch (Instructor)
 
-## jchristopherb
+## dwelchnait
 
-This is a public repository for your classroom demonstrations and practice. You will use this only for public work. Exercise work submitted within this repository will NOT be evaluated.
+This is a public repository for my classroom demos on Razor Pages
+
+## Known Bugs
+
+no known bugs

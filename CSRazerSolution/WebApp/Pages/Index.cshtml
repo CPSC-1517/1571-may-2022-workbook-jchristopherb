@@ -31,20 +31,20 @@
 
 <section class="setflex">
     <div class="onethird">
-        <img src="~/img/Westwind.png" alt="Full West Wind Logo" />
+        <img src="~/img/WestWind.png" alt="full west wind logo" />
     </div>
-    
     <div>
-        <p>
-            <span style="font-size:large; color:firebrick;">Thumbnail</span>
-            An image that is usually a small version of another image. Used where a small image gives meaning and is purposeful.
-        </p>
-        <p>
-            <span style="font-size:large; color:firebrick;">Logo</span>
-            An image that is usually a branding image for a company or organization.
-        </p>
+        <p> <span style="font-size:large;color:firebrick;">Thumbnail</span>
+             An image that is usually a small version of another image. Used
+              where a small image gives meaning and is purposeful.</p>
+        <p> <span style="font-size:large;color:firebrick;">Logo</span>
+             An image tha is usually a branding image for a company or organization.
+             </p>
     </div>
 </section>
+
+
+
 
 @if(string.IsNullOrWhiteSpace(Model.MyName))
 {
@@ -52,21 +52,21 @@
 }
 else
 {
-    @*in-line CSS*@
+    @*in-line css*@
     <p style="font-size:large;color:forestgreen;font-style:italic;">@Model.MyName</p>
 }
 
-<br />
-<br />
+<br/><br/>
 @if(Model.buildVersionInfo == null)
 {
     <p style="font-weight:bold;">Build Version is Unknown</p>
 }
 else
 {
-    <p>Database version:    @Model.buildVersionInfo.Major .
-                            @Model.buildVersionInfo.Minor .
-                            @Model.buildVersionInfo.Build
-                            was released on @Model.buildVersionInfo.ReleaseDate.ToShortDateString()
+    <p> Database version: @Model.buildVersionInfo.Major .
+                          @Model.buildVersionInfo.Minor .
+                          @Model.buildVersionInfo.Build
+        was released on @Model.buildVersionInfo.ReleaseDate.ToShortDateString()
     </p>
 }
+

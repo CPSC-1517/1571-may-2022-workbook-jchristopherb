@@ -4,8 +4,8 @@
     ViewData["Title"] = "Various Controls";
 }
 
-@* Embedded CSS
-<style>
+@*embedded css*@
+@*<style>
     :root {
         --max-body-width: 90rem;
     }
@@ -54,7 +54,6 @@
     }
 </style>
 *@
-
 <h1>Various Form Controls</h1>
 
 @if (!string.IsNullOrWhiteSpace(Model.Feedback))
@@ -94,7 +93,7 @@
             <label>
                 Select favourite meal<br/>
             </label>
-            @*<input type="radio" asp-for="RadioMeal" value="breakfast"/>
+            <input type="radio" asp-for="RadioMeal" value="breakfast"/>
                 &nbsp;Breakfast<br/>
             <input type="radio" asp-for="RadioMeal" value="lunch"/>
                 &nbsp;Lunch<br/>
@@ -102,11 +101,11 @@
                 &nbsp;Dinner/Supper<br/>
             <input type="radio" asp-for="RadioMeal" value="snacks"/>
                 &nbsp;Snacks<br/>
-            *@
-            @foreach(var item in Model.RadioMeals)
+            
+            @*@foreach(var item in Model.RadioMeals)
             {
                 <input type="radio" asp-for="RadioMeal" value="@item"/> @item<br/>
-            }
+            }*@
             <br/>
             <label>
                 <input type="checkbox" asp-for="AcceptanceBox" value=true />

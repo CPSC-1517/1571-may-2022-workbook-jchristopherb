@@ -5,30 +5,24 @@ namespace WebApp.Pages.Samples
 {
     public class BasicDataManagementModel : PageModel
     {
-        //  attribute to connect to control
-        //  BindProperty is an annotation that handles two-way data tranfer
-        //      TWO-WAY means output to form for display AND input from the form processing
-        //  We need a [BindProperty] on each property immediately in front to display the value entered
+        // BindProperty is an annotation that handles two-way data transfer
+        // two-way? means output to form for display AND input from form for processing
         [BindProperty]
         public int Num { get; set; }
-        public string Feedback { get; set; }
-        public string ErrorMsg { get; set; }
-
         [BindProperty]
         public string MassText { get; set; }
-
         [BindProperty]
         public int FavouriteCourse { get; set; }
 
+        public string Feedback { get; set; }
+        public string ErrorMsg { get; set; }
         public void OnGet()
         {
             if (Num == 0)
             {
-                Feedback = "executing the OnGet method for the value of zero";
+                Feedback = "executing the OnGet method for the Get request";
             }
-
             else
-
             {
                 Feedback = $"You entered the value {Num} display by OnGet";
             }
@@ -38,36 +32,30 @@ namespace WebApp.Pages.Samples
         {
             if (Num == 0)
             {
-                Feedback = "executing the OnGet method for the Get request";
+                Feedback = "executing the OnPost method for a value of zero";
             }
-
             else
-
             {
-                Feedback = $"You entered the value {Num} (display by OnPost)\n" +
-                $" your mass text is {MassText} and I like the {FavouriteCourse} course";
+                Feedback = $"You entered the value {Num} (display by OnPost)" +
+                $" your mass text is {MassText} and I like the {FavouriteCourse} course.";
             }
         }
-        
+
         public void OnPostSecondButton()
         {
             if (Num == 0)
             {
-                Feedback = "executing the OnPostSecondButton method for value of zero";
+                Feedback = "executing the OnPostSecondButton method for a value of zero";
             }
-            
-            else if (FavouriteCourse == 0)
+            else if(FavouriteCourse == 0)
             {
-                Feedback = $"You did not select a favourite course.";
+                Feedback ="You did not select a favourite course.";
             }
-
             else
-
             {
-                Feedback = $"You entered the value {Num} (display by OnPostSecondButton)\n" +
-                $" your mass text is {MassText} and I like the {FavouriteCourse} course";
+                Feedback = $"You entered the value {Num} (display by OnPostSecondButton)" +
+                $" your mass text is {MassText} and I like the {FavouriteCourse} course.";
             }
         }
-
     }
 }

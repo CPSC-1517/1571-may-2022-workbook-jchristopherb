@@ -4,52 +4,39 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    @*
-        removed the link to bootstrap
-        add link to Holiday.ca https://holidaycss.js.org/
+    @* removed the link to bootstrap
+        add link to Holiday.css https://holidaycss.js.org/
     *@
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/mycss.css" asp-append-version="true" /> @*placing custom css as the last stylesheet in the head area*@
+    @*placing my custom css as the last stylesheet in the head area*@
+    <link rel="stylesheet" href="~/css/mycss.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
+        @*Holiday.css menu*@
         <nav>
-           <ul>
-              <li>
-                 <a asp-area="" asp-page="/Index">
-                    <img src="~/img/WestWindLogo.png" alt="WestWind Thumbnail Logo" title="Go to Home"/>     
-                 </a>
-              </li>
-              <li>
-                 <a asp-area="" asp-page="/Index">Home</a>
-              </li>
-              
-              @*Sub-menu*@
-              <li>
-                  <span>Samples</span>
-                  <ul>
-                      <li>
-                        <a asp-area="" asp-page="/Samples/BasicDataManagement">Basics</a>
-                      </li>
-                      <li>
-                         <a asp-area="" asp-page="/Samples/Controls">Controls</a>
-                      </li>
-                      <li>
-                         <a asp-area="" asp-page="/Samples/RegionQueryOne">Single Record Query</a>
-                      </li>
-                      <li>
-                         <a asp-area="" asp-page="/Samples/Partial Filter Search">Tabular Filter Query</a>
-                      </li>
-                  </ul>
-              </li>
-              @*Sub-menu END*@
-              
-              <li>
-                 <a asp-area="" asp-page="/Privacy">Privacy</a>
-              </li>
-           </ul>
+            <ul>
+                <li><a asp-area="" asp-page="/Index">
+                       <img src="~/img/WestWindLogo.png" alt="west wind thumbnail logo"
+                                title="Go to Home" />
+                    </a></li>
+                <li><a asp-area="" asp-page="/Index">Home</a></li>
+                @*Sub-menu*@
+                <li>
+                    <span>Samples</span>
+                    <ul>
+                        <li><a asp-area="" asp-page="/Samples/BasicDataManagement">Basics</a></li>
+                        <li><a asp-area="" asp-page="/Samples/controls">Controls</a></li>
+                        <li><a asp-area="" asp-page="/Samples/RegionQueryOne">Single Record Query</a></li>
+                        <li><a asp-area="" asp-page="/Samples/PartialFilterSearch">Tabular Filter Query</a></li>
+
+                    </ul>
+                </li>
+                <li><a asp-area="" asp-page="/Privacy">Privacy</a></li>
+            </ul>   
         </nav>
     </header>
     <div>
@@ -62,6 +49,7 @@
             &copy; 2022 - WebApp - NAIT CPSC-1517 all rights reserved <a asp-area="" asp-page="/Privacy">Privacy</a>
     </footer>
 
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
