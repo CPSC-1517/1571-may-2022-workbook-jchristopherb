@@ -44,8 +44,8 @@ namespace WestWindSystem.BLL
             //  FIRST: get the first record on the table that matches the request condition
             //  DEFAULT: if no record is found matching the request condition return a null
             //  In our Linq query we have NO filtering conditions
-            BuildVersion info = _context.BuildVersions.FirstOrDefault();
-            return info;
+           return _context.BuildVersions.FirstOrDefault();
+            
         }
         #endregion
     }

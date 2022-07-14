@@ -48,7 +48,6 @@ namespace WestWindSystem
 
                 return new RegionServices(context);
             });
-
         }
     }
 }

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //  STEPS:
 //  #1 retrieve the connections string information from your appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("WestWindDB");
+var connectionString = builder.Configuration.GetConnectionString("WWDB");
 
 //  #2 setup the registration of services to be used in your web application
 builder.Services.WWBackendDepedencies(options => options.UseSqlServer(connectionString));
