@@ -14,9 +14,12 @@
             placeholder="enter your description"/>
     </label>
     <br/>
-    @*restrict the display of the table to when there is data to view*@
+    @*restrict the display of the table to when there is data to view
+        The first IF checks to see if an instance of TerritoryInfo actually exists
+    *@
     @if (Model.TerritoryInfo != null)
     {
+        @*This if checks to see if any records were found when the query was executed*@
         if (Model.TerritoryInfo.Count == 0)
         {
             <p style="color:blueviolet; font-weight:bold; font-size:large;">
@@ -25,6 +28,11 @@
         }
         else
         {
+            @*Records have been found to display
+                The number of records is unknown
+                Use a tabular (grid table) layout to display the records
+                Use the <table> tag and its components <thead>, <tbody>, <tfoot>
+            *@
             <table>
                 <thead>
                     @*used for column titles*@
