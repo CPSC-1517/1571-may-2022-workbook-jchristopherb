@@ -16,12 +16,17 @@ namespace WebApp.Pages.Samples
         #region Private service fields & class constructor
         private readonly CategoryServices _categoryServices;
         private readonly ProductServices _productServices;
+        private readonly SupplierServices _supplierServices;
+        
 
         public CategoryProductsModel(CategoryServices categoryservices,
-                                        ProductServices productservices)
+                                        ProductServices productservices,
+                                        SupplierServices supplierservices)
         {
             _categoryServices = categoryservices;
             _productServices = productservices;
+            _supplierServices = supplierservices;
+
         }
         #endregion
         //  this property is being used as the routing parameter
@@ -31,6 +36,11 @@ namespace WebApp.Pages.Samples
 
         public List<Category> CategoryList { get; set; }
 
+        public List<Product> ProductList { get; set; }
+        
+        public List<Supplier> SupplierList { get; set; }
+
+
         /// <summary>
         /// Feedback needs to be carried to the webpage which will call the OnGet (second trip to server) to obtain the data to display on the browser
         /// </summary>
@@ -39,13 +49,16 @@ namespace WebApp.Pages.Samples
 
         public void OnGet()
         {
+            if (categoryid.HasValue)
+                if (categoryid.Value > 0)
+                    ProductList = _productServices.Product_GetByCategory(categoryid.Value);
             PopulateList();
         }
 
         public void PopulateList()
         {
-            //obtain the data list for the Region dropdownlist (select tag)
             CategoryList = _categoryServices.Category_List();
+            SupplierList = _supplierServices.Supplier_List();
         }
 
         public IActionResult OnPostSearch()
@@ -68,5 +81,11 @@ namespace WebApp.Pages.Samples
             ModelState.Clear();
             return RedirectToPage(new { categoryid = categoryid });
         }
+
+        public IActionResult OnPostNew()
+        {
+            return RedirectToPage("/Samples/CRUDProduct");
+        }
+        
     }
 }
