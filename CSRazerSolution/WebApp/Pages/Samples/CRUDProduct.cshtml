@@ -1,0 +1,109 @@
+﻿@page "{productid?}"
+@model WebApp.Pages.Samples.CRUDProductModel
+@{
+    ViewData["Title"] = "Product Maintenance";
+}
+
+<h1>CRUD: Product Instance</h1>
+
+@*@if(Model.HasFeedBack)
+{
+    <p>@Model.FeedBack</p>
+}
+
+@if(Model.HasError)
+{
+    <p style="color:firebrick;">@Model.ErrorMessage</p>
+}*@
+
+<form method="post">
+    @*  create a control that will hold the product pkey value
+        this control should NOT be changeable IF your pkey is an IDENTITY
+        this control CAN be visible (type="text") or hidden if (type="hidden")
+        this is a design consideration
+    *@
+    <label>
+        ID:
+        @if(Model.ProductInfo == null)
+        {
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-validation="false" value="0" />
+        }
+        else
+        {
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-validation="false" />
+        }
+    </label>
+
+    <label>
+        Name:
+            <input type="text" asp-for="ProductInfo.ProductName" placeholder="Product Name" />
+    </label>
+
+    <label>
+        Supplier:
+        Select a supplier:
+        <select asp-for="ProductInfo.SupplierID">
+            <option value="0">Select ...</option>
+            @foreach (var sup in Model.SupplierList)
+            {
+                <option value="@sup.SupplierID"
+                selected=@(Model.ProductInfo != null && sup.SupplierID == Model.ProductInfo.SupplierID)>
+                @sup.CompanyName</option>
+            }
+        </select>
+    </label>
+
+    <label>
+        Category:
+        Select a category:
+        <select asp-for="ProductInfo.CategoryID">
+            <option value="0">Select ...</option>
+            @foreach (var category in Model.CategoryList)
+            {
+                <option value="@category.CategoryID"
+                selected=@(Model.ProductInfo != null && category.CategoryID == Model.ProductInfo.CategoryID)>
+                @category.CategoryName</option>
+            }
+        </select>
+    </label>
+
+    <label>
+        Unit Size:
+            <input type="text" asp-for="ProductInfo.QuantityPerUnit" placeholder="Unit Size" />
+    </label>
+    
+    <label>
+        Minimum Order:
+            <input type="number" asp-for="ProductInfo.MinimumOrderQuantity" placeholder="Minimum Order By Qty" step="1" min="1"/>
+    </label>
+
+    <label>
+        Unit Price:
+            <input type="number" asp-for="ProductInfo.UnitPrice" placeholder="Unit Price" step="0.01" min="0.00"/>
+    </label>
+    
+    <label>
+        Units On Order:
+            <input type="number" asp-for="ProductInfo.UnitsOnOrder" placeholder="Units On Order" step="1" min="0"/>
+    </label>
+
+    @*
+    For a checkbox, the transfer of data BY DEFAULT is either not checked (NULL) or checked (ON).
+    IF you are expecting a boolean (true or false) then use the attribute value="true"
+    Why does this work? REMEMBER: when an instance is created, the properties in your instance will be set to:
+    1. NULL if the property is not specified in the HTML
+    2. ON if the property is specified in the HTML
+    3. FALSE if the property is specified in the HTML with value="false"
+    4. System defaults depending on datatype OR
+    5. Constructor assignment
+    
+    Therefore, the default boolean value for a checkbox is FALSE.
+    BY USING the attribute value="true" IF you want the checkbox to be checked, then you must explicitly set the property to TRUE.
+    *@
+    
+    <label>
+        Discontinued:
+            <input type="checkbox" asp-for="ProductInfo.Discontinued" />  &nbsp;&nbsp; (discontinued if checked)
+    </label>
+    
+</form>
