@@ -113,9 +113,61 @@ namespace WestWindSystem.BLL
             // can include any additional Business Rule Validation testing
 
             // stage the update
-            EntityEntry<Product> entry = _context.Entry(Item);
+            EntityEntry<Product> updating = _context.Entry(Item);
             //  flag the entry for its action
-            entry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            updating.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //  commit
+            //  during the commit, the database will be updated with the new data
+            return _context.SaveChanges();
+        }
+        
+        public int Product_DeleteProduct(Product Item)
+        {
+            // for an delete, you MUST have the pkey value on your instance
+            // if not, updating will not work
+
+            // check that the incoming item has an instance
+
+            if (Item == null)
+            {
+                throw new ArgumentNullException("Product data is missing");
+            }
+
+            // you MAY wish to check if the pkey value exists on the database table
+            bool exists = _context.Products.Any(x => x.ProductID == Item.ProductID);
+            //  if (!_context.Products.Any(x => x.ProductID == Item.ProductID))
+            if (!exists)
+            {
+                throw new Exception($"{Item.ProductName} with a size of {Item.QuantityPerUnit} not found");
+            }
+
+            // can include any additional Business Rule Validation testing
+
+            //  there are two types of deleting: physical and logical
+
+            //  physical: delete the record from the database
+
+            //  REMEMBER: you CANNOT delete a parent record if there are child records that depend on it (pkey => fkey)
+
+            // stage the update
+
+            /*
+             * EntityEntry<Product> deleting = _context.Entry(Item);
+         
+               deleting.State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+             *
+             */
+
+            //  logical: set the record to a deleted state in the database
+
+            //  DO NOT rely on the user to set the flag
+            //  for a logical delete, youre actually doing an UPDATE
+            Item.Discontinued = true;
+            // stage the update
+            EntityEntry<Product> updating = _context.Entry(Item);
+            //  flag the entry for its action
+            updating.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            
             //  commit
             //  during the commit, the database will be updated with the new data
             return _context.SaveChanges();
