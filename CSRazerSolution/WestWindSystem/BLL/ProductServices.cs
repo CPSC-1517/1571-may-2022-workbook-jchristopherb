@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 #region Additional Namespaces
 using WestWindSystem.DAL;
+using Microsoft.EntityFrameworkCore.ChangeTracking; //  for EntityEntrty>
 using WestWindSystem.Entities;
 #endregion
 
@@ -87,6 +88,37 @@ namespace WestWindSystem.BLL
             
             //  return the new identity pkey value to the webapp
             return Item.ProductID;
+        }
+
+        public int Product_UpdateProduct(Product Item)
+        {
+            // for an update, you MUST have the pkey value on your instance
+            // if not, updating will not work
+
+            // check that the incoming item has an instance
+            
+            if (Item == null)
+            {
+                throw new ArgumentNullException("Product data is missing");
+            }
+
+            // you MAY wish to check if the pkey value exists on the database table
+            bool exists = _context.Products.Any(x => x.ProductID == Item.ProductID);
+            //  if (!_context.Products.Any(x => x.ProductID == Item.ProductID))
+            if (!exists)
+            {
+                throw new Exception($"{Item.ProductName} with a size of {Item.QuantityPerUnit} not found");
+            }
+
+            // can include any additional Business Rule Validation testing
+
+            // stage the update
+            EntityEntry<Product> entry = _context.Entry(Item);
+            //  flag the entry for its action
+            entry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //  commit
+            //  during the commit, the database will be updated with the new data
+            return _context.SaveChanges();
         }
         #endregion
 
