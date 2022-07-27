@@ -63,6 +63,7 @@ namespace WestWindSystem.BLL
         //query by a number
         public List<Territory> GetByRegion(int regionid)
         {
+            //This is a typical numeric filter query
             IEnumerable<Territory> info = _context.Territories
                             .Where(x => x.RegionID == regionid)
                             .OrderBy(x => x.TerritoryDescription);

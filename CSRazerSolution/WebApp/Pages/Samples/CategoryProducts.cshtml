@@ -3,34 +3,34 @@
 @{
     ViewData["Title"] = "Category Products CRUD";
 }
+<h1>CRUD Category Products</h1>
 
-<h1>CRUD Category Product</h1>
 <p>@Model.Feedback</p>
 
-<form>
-    <label>
-        @*
-            on a select tag option value is the data being returned for your selection
-            the value between the openning tag and closing tag is being displayed on the webpage
+<form method="post">
+    <label> 
+        @*on a select tag
+            option value is the data being returned for your selection
+            the value between the opening tag and closing tag is being display on the 
+                 web page
         *@
         Select a category:
         <select asp-for="categoryid">
-            <option value="0">Select ...</option>
-            @foreach (var category in Model.CategoryList)
+            <option value="0">select ....</option>
+            @foreach(var cat in Model.CategoryList)
             {
-                <option value="@category.CategoryID"
-                selected=@(category.CategoryID == Model.categoryid)>
-                @category.CategoryName</option>
+                <option value="@cat.CategoryID"
+                    selected=@(cat.CategoryID == Model.categoryid)>
+                @cat.CategoryName
+                </option>
             }
         </select>
     </label>
-    <br />
-    <br />
-    <button type="submit" asp-page-handler="Search">Search</button>&nbsp;&nbsp;
-    <button type="submit" asp-page-handler="Clear">Clear</button>&nbsp;&nbsp;
-    <button type="submit" asp-page-handler="New">New Product</button>
-    <br />
-    <br />
+    <br/><br/>
+    <button type="submit" asp-page-handler="Search">Search</button>&nbsp;&nbsp;    
+    <button type="submit" asp-page-handler="Clear">Clear</button>&nbsp;&nbsp; 
+    <button type="submit" asp-page-handler="New">New Product</button> 
+    <br/><br/>
     @if (Model.ProductList != null)
     {
         if (Model.ProductList.Count() == 0)
@@ -40,33 +40,35 @@
         else
         {
             <table>
-                
                 <thead>
                     <tr>
                         <th>Product</th>
                         <th>Supplier</th>
                         <th>Unit Size</th>
-                        <th>Disc</th>                        
+                        <th>Disc</th>
                     </tr>
                 </thead>
-                
                 <tbody>
-                    @foreach(var item in Model.ProductList)
+                    @foreach(var item in Model.ProductList )
                     {
+                        @*
+                            to format currency on a display field
+                            use the string.Format("{0:#,##0.00}",variablename)
+                        *@
                         <tr>
                             <td>
-                                <a href="/Samples/CRUDProduct/">@item.ProductName</a>
+                                <a href="/Samples/CRUDProduct/@item.ProductID">
+                                    @item.ProductName</a>
                             </td>
                             <td>
                                 <select disabled="true">
-                                    @foreach (var sup in Model.SupplierList)
+                                    @foreach(var sup in Model.SupplierList)
                                     {
                                         <option value="@sup.SupplierID"
-                                        selected=@(sup.SupplierID == item.SupplierID)>
+                                            selected=@(sup.SupplierID == item.SupplierID)>
                                         @sup.CompanyName
                                         </option>
                                     }
-       
                                 </select>
                             </td>
                             <td>
@@ -77,15 +79,12 @@
                             </td>
                         </tr>
                     }
-                    
                 </tbody>
-
                 <tfoot>
-                    
+
                 </tfoot>
-                
             </table>
-            
         }
     }
+
 </form>

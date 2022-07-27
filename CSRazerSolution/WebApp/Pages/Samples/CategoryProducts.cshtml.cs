@@ -12,37 +12,36 @@ namespace WebApp.Pages.Samples
 {
     public class CategoryProductsModel : PageModel
     {
-
         #region Private service fields & class constructor
         private readonly CategoryServices _categoryServices;
         private readonly ProductServices _productServices;
         private readonly SupplierServices _supplierServices;
-        
+
 
         public CategoryProductsModel(CategoryServices categoryservices,
                                         ProductServices productservices,
-                                        SupplierServices supplierservices)
+                                        SupplierServices supplierServices)
         {
             _categoryServices = categoryservices;
             _productServices = productservices;
-            _supplierServices = supplierservices;
-
+            _supplierServices=supplierServices;
         }
         #endregion
-        //  this property is being used as the routing parameter
-        //  the SupportsGet = true -- indicates that the parameter supports the OnGet issued by RedirectToPage()
+        // this property is being used as the routing paramenter
+        // the SupportsGet = true indicates that the parameter
+        //   supports the OnGet issued by the RedirectToPage()
         [BindProperty(SupportsGet = true)]
         public int? categoryid { get; set; }
 
         public List<Category> CategoryList { get; set; }
 
-        public List<Product> ProductList { get; set; }
-        
         public List<Supplier> SupplierList { get; set; }
-
+        public List<Product> ProductList { get; set; }
 
         /// <summary>
-        /// Feedback needs to be carried to the webpage which will call the OnGet (second trip to server) to obtain the data to display on the browser
+        /// why Feedback needs to be carried to the web page which will call
+        ///     the OnGet (second trip to server) to obtain the data to display
+        ///     on the browser.
         /// </summary>
         [TempData]
         public string Feedback { get; set; }
@@ -52,26 +51,23 @@ namespace WebApp.Pages.Samples
             if (categoryid.HasValue)
                 if (categoryid.Value > 0)
                     ProductList = _productServices.Product_GetByCategory(categoryid.Value);
-            PopulateList();
+            PopulateLists();
         }
 
-        public void PopulateList()
+        public void PopulateLists()
         {
             CategoryList = _categoryServices.Category_List();
             SupplierList = _supplierServices.Supplier_List();
+
         }
 
         public IActionResult OnPostSearch()
         {
             if (categoryid == 0)
             {
-                Feedback = "Please select a category";
-                return Page();
+                Feedback = "Select a category to view the products for maintenance";
             }
-            else
-            {
-                return RedirectToPage(new { categoryid = categoryid });
-            }
+            return RedirectToPage(new { categoryid = categoryid });
         }
 
         public IActionResult OnPostClear()
@@ -84,8 +80,9 @@ namespace WebApp.Pages.Samples
 
         public IActionResult OnPostNew()
         {
+           
             return RedirectToPage("/Samples/CRUDProduct");
         }
-        
+
     }
 }

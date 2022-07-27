@@ -82,7 +82,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "CHRISB-DESKTOP\\SQLEXPRESS.WestWind",
+   "UiHint": "DESKTOP-SV18SD0.WestWind",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

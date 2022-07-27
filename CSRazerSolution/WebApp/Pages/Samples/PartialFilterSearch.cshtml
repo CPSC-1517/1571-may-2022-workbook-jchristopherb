@@ -1,7 +1,7 @@
 ﻿@page "{searcharg?}"
 @model WebApp.Pages.Samples.PartialFilterSearchModel
 @{
-    ViewData["Title"] = "Partial String Table Query";
+    ViewData["Title"] = "Partial String Table Query: Redirect";
 }
 <h1>Partial String query resulting in a Table display</h1>
 
@@ -19,7 +19,7 @@
     *@
     @if (Model.TerritoryInfo != null)
     {
-        @*This if checks to see if any records were found when the query was executed*@
+        @*This IF checks to see if any records were found when the query was executed*@
         if (Model.TerritoryInfo.Count == 0)
         {
             <p style="color:blueviolet; font-weight:bold; font-size:large;">
@@ -28,10 +28,11 @@
         }
         else
         {
-            @*Records have been found to display
+            @*
+                Records have been found to display
                 The number of records is unknown
                 Use a tabular (grid table) layout to display the records
-                Use the <table> tag and its components <thead>, <tbody>, <tfoot>
+                Use the <table> tag and its components <thead>,<tbody>,<tfoot>
             *@
             <table>
                 <thead>
@@ -68,7 +69,7 @@
                                     The text of your anchor tag DOES NOT need to be
                                        the value that is being passed
                                 *@
-                                <a href="/Samples/ReceivingPage/@item.TerritoryID">
+                                <a href="/Samples/ReceivingPageRouting/@item.TerritoryID">
                                     Edit this territory
                                 </a>
                                 
@@ -106,7 +107,7 @@
                                 //the string maybe be a character line : Next
                                 //the string maybe be a numeric : 4
                                 //  First Previous 1 2 3 4 5 Next Last
-                            
+                              
                                 foreach(var pageRef in Model.Pager)
                                 {
                                     if (pageRef == Model.Pager.CurrentPage)
@@ -124,6 +125,14 @@
                                         //      of the desired page
                                         //for the asp-page your page name reference
                                         //  MUST be based from the folder name Pages
+
+                                        //the syntax for routing to a variable is
+                                        //   asp-route-xxxxx where xxxxx is the variable
+                                        //   destination to which you wish to route 
+
+                                        //currentPage will be sent as a url parameter
+                                        //  which will be obtained on the OnGet()
+
                                             <a title="Page @pageRef.Page"
                                            asp-page="/Samples/PartialFilterSearch"
                                            asp-route-currentpage="@pageRef.Page">
@@ -131,10 +140,11 @@
                                              </a>
                                     }
                                 }
-                             }
+                            }
                         </td>
                     </tr>
                 </tfoot>
+
             </table>
         }
     }

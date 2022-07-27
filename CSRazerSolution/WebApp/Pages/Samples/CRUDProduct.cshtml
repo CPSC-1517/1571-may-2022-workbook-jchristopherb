@@ -4,106 +4,143 @@
     ViewData["Title"] = "Product Maintenance";
 }
 
-<h1>CRUD: Product Instance</h1>
+<h1>CRUD: Product instance</h1>
 
-@*@if(Model.HasFeedBack)
+@if(Model.HasFeedback)
 {
-    <p>@Model.FeedBack</p>
+    <p>@Model.Feedback</p>
 }
 
 @if(Model.HasError)
 {
-    <p style="color:firebrick;">@Model.ErrorMessage</p>
-}*@
+    <p style="color:firebrick;">@Model.ErrorMsg</p>
+}
 
 <form method="post">
-    @*  create a control that will hold the product pkey value
-        this control should NOT be changeable IF your pkey is an IDENTITY
-        this control CAN be visible (type="text") or hidden if (type="hidden")
-        this is a design consideration
+    @*create a control that will hold the product pkey value
+      this control should NOT be changable IF your pkey is an IDENTITY
+      this control CAN be visible (type="text") or hiddent (type="hidden")
+      this is a design consideration
     *@
     <label>
         ID:
         @if(Model.ProductInfo == null)
         {
-            <input type="text" asp-for="ProductInfo.ProductID" readonly data-validation="false" value="0" />
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false"
+              value="0" />
         }
         else
         {
-            <input type="text" asp-for="ProductInfo.ProductID" readonly data-validation="false" />
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false" />    
         }
     </label>
-
     <label>
         Name:
-            <input type="text" asp-for="ProductInfo.ProductName" placeholder="Product Name" />
+            <input type="text" asp-for="ProductInfo.ProductName" 
+             placeholder="product name"/>    
     </label>
-
     <label>
         Supplier:
         Select a supplier:
         <select asp-for="ProductInfo.SupplierID">
-            <option value="0">Select ...</option>
-            @foreach (var sup in Model.SupplierList)
+            <option value="0">select ....</option>
+            @foreach(var sup in Model.SupplierList)
             {
                 <option value="@sup.SupplierID"
-                selected=@(Model.ProductInfo != null && sup.SupplierID == Model.ProductInfo.SupplierID)>
-                @sup.CompanyName</option>
+                    selected=@(Model.ProductInfo != null
+                          && sup.SupplierID == Model.ProductInfo.SupplierID)>
+                @sup.CompanyName
+                </option>
             }
         </select>
-    </label>
 
+    </label>
     <label>
         Category:
         Select a category:
         <select asp-for="ProductInfo.CategoryID">
-            <option value="0">Select ...</option>
-            @foreach (var category in Model.CategoryList)
+            <option value="0">select ....</option>
+            @foreach(var cat in Model.CategoryList)
             {
-                <option value="@category.CategoryID"
-                selected=@(Model.ProductInfo != null && category.CategoryID == Model.ProductInfo.CategoryID)>
-                @category.CategoryName</option>
+                <option value="@cat.CategoryID"
+                    selected=@(Model.ProductInfo != null
+                          && cat.CategoryID == Model.ProductInfo.CategoryID)>
+                @cat.CategoryName
+                </option>
             }
         </select>
-    </label>
 
+    </label>
     <label>
         Unit Size:
-            <input type="text" asp-for="ProductInfo.QuantityPerUnit" placeholder="Unit Size" />
+            <input type="text" asp-for="ProductInfo.QuantityPerUnit" 
+             placeholder="unit size" />    
     </label>
-    
     <label>
-        Minimum Order:
-            <input type="number" asp-for="ProductInfo.MinimumOrderQuantity" placeholder="Minimum Order By Qty" step="1" min="1"/>
+        Min Order Qty:
+            <input type="number" asp-for="ProductInfo.MinimumOrderQuantity" 
+             placeholder="minimum order qty" step="1" min="1" />    
     </label>
-
     <label>
         Unit Price:
-            <input type="number" asp-for="ProductInfo.UnitPrice" placeholder="Unit Price" step="0.01" min="0.00"/>
+            <input type="number" asp-for="ProductInfo.UnitPrice" 
+             placeholder="unit price" step="0.01" min="0.00" />    
     </label>
-    
     <label>
-        Units On Order:
-            <input type="number" asp-for="ProductInfo.UnitsOnOrder" placeholder="Units On Order" step="1" min="0"/>
+        UoO:
+            <input type="number" asp-for="ProductInfo.UnitsOnOrder" 
+             placeholder="on order" step="1" min="0" />    
     </label>
-
     @*
-    For a checkbox, the transfer of data BY DEFAULT is either not checked (NULL) or checked (ON).
-    IF you are expecting a boolean (true or false) then use the attribute value="true"
-    Why does this work? REMEMBER: when an instance is created, the properties in your instance will be set to:
-    1. NULL if the property is not specified in the HTML
-    2. ON if the property is specified in the HTML
-    3. FALSE if the property is specified in the HTML with value="false"
-    4. System defaults depending on datatype OR
-    5. Constructor assignment
-    
-    Therefore, the default boolean value for a checkbox is FALSE.
-    BY USING the attribute value="true" IF you want the checkbox to be checked, then you must explicitly set the property to TRUE.
+        for a checkbox, the transfer of data BY DEFAULT us either
+              not checked -> null OR checked -> on
+        IF you are expecting a boolean (true or false) then use the 
+              attribute value="true"
+        Why does this work. REMEMBER: when an nstance is created, the properties
+            in your instance will be set to: 
+               a) system defualts depending on datatype
+            or b) constructor assignment
+        THEREFORE the default of a boolean poperty is "false"
+        BY USING the attribute value="true", IF the control is checked, data WILL be
+            transfered to the recieving property (in this case true), IF the control
+            is NOT checked, then no data will be transfered to the recieving property
     *@
-    
     <label>
         Discontinued:
-            <input type="checkbox" asp-for="ProductInfo.Discontinued" />  &nbsp;&nbsp; (discontinued if checked)
+            <input type="checkbox" asp-for="ProductInfo.Discontinued" value="true" />
+            &nbsp;&nbsp; (discontinued if checked)
     </label>
-    
+    <br/><br/>
+    @*Manage the buttons, restricting user access*@
+    @if(Model.productid.HasValue)
+    {
+       <button type="submit" asp-page-handler="New" disabled>Save New</button> 
+       <button type="submit" asp-page-handler="Update">Update</button> 
+       @*add Javascript prompt (pre-code method) for delete confirmation using the 
+           onclick event of the button
+
+         this button should be able to be press whether the is valid data or not
+           being displayed. You are planning to delete the data from the database.
+       *@
+       <button type="submit" asp-page-handler="Delete" formnovalidate
+        onclick="return confirm('Are you sure you wish to discontinue the product?')"
+       >Discontinued</button> 
+    }
+    else
+    {
+        <button type="submit" asp-page-handler="New" >Save New</button> 
+       <button type="submit" asp-page-handler="Update" disabled>Update</button> 
+       @*add Javascript prompt (pre-code method) for delete confirmation using the 
+           onclick event of the button
+
+         this button should be able to be press whether the is valid data or not
+           being displayed. You are planning to delete the data from the database.
+       *@
+       <button type="submit" asp-page-handler="Delete" formnovalidate disabled
+        onclick="return confirm('Are you sure you wish to discontinue the product?')"
+       >Discontinued</button>
+    }
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button> 
+    <button type="submit" asp-page-handler="Search" formnovalidate>Return to Search</button> 
+
 </form>
