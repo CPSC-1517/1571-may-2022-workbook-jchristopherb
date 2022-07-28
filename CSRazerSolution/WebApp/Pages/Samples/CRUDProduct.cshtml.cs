@@ -88,5 +88,58 @@ namespace WebApp.Pages.Samples
         {
             return RedirectToPage("/Samples/CategoryProducts");
         }
+
+        public IActionResult OnPostNew()
+        {
+            try
+            {
+                //  REMEMBER: [BindProperty] is a two-way movement of data
+                //  it will fill
+                //  call the appropriate service method
+                int newproductid = _productServices.Product_AddProduct(ProductInfo);
+
+                //  always want to give feedback to your user
+                Feedback = $"Product {ProductInfo.ProductName} added";
+
+                return RedirectToPage(new { productid = newproductid });
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                //  use the drill down to find the REAL ERROR
+                ErrorMsg = GetInnerException(ex).Message;
+
+                //  reload ANY list that are being used on your from
+                //  
+                PopulateSupportLists();
+
+                //  stay on the "same" page
+                //  the idea is not to "leave" the current request page (data)
+                //  this is required because the method is using IActionResult
+                //  IActionResult expects a return action RedirectToPage or Page
+                //  RedirectToPage, finishes this request and issues a Get request
+                return Page();
+            }
+            catch (ArgumentException ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+        }
+        private Exception GetInnerException(Exception ex)
+        {
+            while (ex.InnerException != null)
+            {
+                ex = ex.InnerException;
+            }
+            return ex;
+        }
     }
 }
