@@ -133,6 +133,99 @@ namespace WebApp.Pages.Samples
                 return Page();
             }
         }
+        
+        public IActionResult OnPostUpdate()
+        {
+            try
+            {
+                //  call the appropriate service method
+                //  the update service method returns the nmber of rows affected
+                int rowsAffected = _productServices.Product_UpdateProduct(ProductInfo);
+
+                //  always want to give feedback to your user
+                //  with an update three results are possible
+                //  a) a record was found and changed
+                //  b) the action was aborted (handled by the catch)
+                //  c) a record having the given pkey value ws NOT found and therefore no change to the database
+                if (rowsAffected > 0)
+                {
+                    Feedback = $"Product {ProductInfo.ProductName} updated on the system";
+                }
+                else
+                {
+                    Feedback = $"Product {ProductInfo.ProductName} not found on the system";
+                }
+
+                return RedirectToPage(new { productid = productid });
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message; 
+                PopulateSupportLists();
+                return Page();
+            }
+            catch (ArgumentException ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+        }
+        
+        public IActionResult OnPostDelete()
+        {
+            try
+            {
+                //  call the appropriate service method
+                //  the update service method returns the nmber of rows affected
+                int rowsAffected = _productServices.Product_DeleteProduct(ProductInfo);
+
+                //  always want to give feedback to your user
+                //  with an update three results are possible
+                //  a) a record was found and deleted
+                //  b) the action was aborted (handled by the catch)
+                //  c) a record having the given pkey value ws NOT found and therefore no change to the database
+                if (rowsAffected > 0)
+                {
+                    Feedback = $"Product {ProductInfo.ProductName} has been updated to be discontinued on the system";
+                }
+                else
+                {
+                    Feedback = $"Product {ProductInfo.ProductName} no longer exists on the system";
+                }
+
+                return RedirectToPage(new { productid = productid }); // logical delete
+                //  return RedirectToPage(new { productid = (int?) null }); // physical delete
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message; 
+                PopulateSupportLists();
+                return Page();
+            }
+            catch (ArgumentException ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ErrorMsg = GetInnerException(ex).Message;
+                PopulateSupportLists();
+                return Page();
+            }
+        }
+
+
         private Exception GetInnerException(Exception ex)
         {
             while (ex.InnerException != null)
